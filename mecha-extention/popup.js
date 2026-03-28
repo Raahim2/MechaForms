@@ -1,4 +1,4 @@
-const API_URL = "https://fastapi-production-7b28f.up.railway.app";
+const API_URL = "https://mechaforms-api.vercel.app";
 
 const loginView = document.getElementById('login-view');
 const dashboardView = document.getElementById('dashboard-view');

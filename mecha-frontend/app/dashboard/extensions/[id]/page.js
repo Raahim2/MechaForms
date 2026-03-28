@@ -36,7 +36,7 @@ export default function ExtensionDetail() {
 
       try {
         // 1. Fetch Extension Details from server
-        const response = await fetch(`https://fastapi-production-7b28f.up.railway.app/extensions/details/${params.id}`);
+        const response = await fetch(`https://mechaforms-api.vercel.app/extensions/details/${params.id}`);
         const data = await response.json();
         
         if (data.error) throw new Error("Not found");
@@ -48,7 +48,7 @@ export default function ExtensionDetail() {
 
         // 2. Check if this protocol is already active in the user's profile
         if (user) {
-          const activeRes = await fetch(`https://fastapi-production-7b28f.up.railway.app/vault/active-extensions/${user.email}`);
+          const activeRes = await fetch(`https://mechaforms-api.vercel.app/vault/active-extensions/${user.email}`);
           const activeList = await activeRes.json();
           if (activeList.includes(params.id)) {
             setIsInstalled(true);
@@ -76,7 +76,7 @@ export default function ExtensionDetail() {
     setIsActivating(true);
 
     try {
-      const response = await fetch('https://fastapi-production-7b28f.up.railway.app/vault/activate-extension', {
+      const response = await fetch('https://mechaforms-api.vercel.app/vault/activate-extension', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

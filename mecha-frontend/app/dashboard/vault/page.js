@@ -31,7 +31,7 @@ export default function IdentityVault() {
       const user = JSON.parse(userStr);
 
       try {
-        const response = await fetch(`https://fastapi-production-7b28f.up.railway.app/vault/list/${user.email}`);
+        const response = await fetch(`https://mechaforms-api.vercel.app/vault/list/${user.email}`);
         const data = await response.json();
         setVaultItems(data);
       } catch (err) {
@@ -49,7 +49,7 @@ export default function IdentityVault() {
     setIsSyncing(true);
 
     try {
-      const response = await fetch('https://fastapi-production-7b28f.up.railway.app/vault/add', {
+      const response = await fetch('https://mechaforms-api.vercel.app/vault/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -75,7 +75,7 @@ export default function IdentityVault() {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`https://fastapi-production-7b28f.up.railway.app/vault/delete/${id}`, {
+      const response = await fetch(`https://mechaforms-api.vercel.app/vault/delete/${id}`, {
         method: 'DELETE'
       });
       if (response.ok) setVaultItems(vaultItems.filter(item => item.id !== id));

@@ -33,7 +33,7 @@ export default function MechaDashboard() {
         setUser(parsedUser);
 
         try {
-          const response = await fetch(`https://fastapi-production-7b28f.up.railway.app/vault/list/${parsedUser.email}`);
+          const response = await fetch(`https://mechaforms-api.vercel.app/vault/list/${parsedUser.email}`);
           const data = await response.json();
           setShortcuts(data);
         } catch (err) {

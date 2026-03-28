@@ -32,7 +32,7 @@ export default function AuthPage() {
       : formData;
 
     try {
-      const response = await fetch(`https://fastapi-production-7b28f.up.railway.app${endpoint}`, {
+      const response = await fetch(`https://mechaforms-api.vercel.app${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

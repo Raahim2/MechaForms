@@ -21,7 +21,7 @@ export default function ExtensionMarketplace() {
   useEffect(() => {
     const fetchExtensions = async () => {
       try {
-        const res = await fetch('https://fastapi-production-7b28f.up.railway.app/extensions/list');
+        const res = await fetch('https://mechaforms-api.vercel.app/extensions/list');
         if (!res.ok) throw new Error("Failed to fetch extensions");
         const data = await res.json();
         setExtensions(data);
