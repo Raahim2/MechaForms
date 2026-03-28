@@ -1,0 +1,8 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+mecha-frontend/node_modules
+mecha-frontend/.next
+
+mecha-backend/__pycache__/
+.env*

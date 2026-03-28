@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { width: 300px; padding: 15px; font-family: sans-serif; background: #f9f9f9; }
+    .hidden { display: none; }
+    .card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    input { width: 100%; margin-bottom: 10px; padding: 10px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 5px; }
+    button { width: 100%; padding: 10px; cursor: pointer; background: #222; color: white; border: none; border-radius: 5px; font-weight: bold; }
+    .shortcut-item { font-size: 12px; border-bottom: 1px solid #eee; padding: 8px 0; color: #444; }
+    .shortcut-item b { color: #007bff; }
+    .error { color: #d9534f; font-size: 12px; margin-bottom: 10px; }
+    .footer { font-size: 11px; text-align: center; margin-top: 15px; color: #888; }
+    a { color: #007bff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <!-- Login View -->
+    <div id="login-view">
+      <h3 style="margin-top:0">Mecha Vault</h3>
+      <div id="error-msg" class="error"></div>
+      <input type="text" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Password">
+      <button id="login-btn">Unlock Vault</button>
+      <div class="footer">
+        Manage vault at <br/> <a href="http://mecha-forms.vercel.app" target="_blank">mecha-forms.vercel.app</a>
+      </div>
+    </div>
+
+    <!-- Dashboard View -->
+    <div id="dashboard-view" class="hidden">
+      <h3 id="welcome-user" style="margin-top:0">Welcome</h3>
+      <div id="shortcut-list" style="max-height: 200px; overflow-y: auto; margin-bottom: 10px;"></div>
+      <button id="logout-btn" style="background:#888;">Logout / Lock</button>
+      <div class="footer">Close and reopen to sync latest changes.</div>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
