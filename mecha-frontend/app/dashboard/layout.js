@@ -95,7 +95,7 @@ export default function DashboardLayout({ children }) {
             </Link>
 
             <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-violet-600 to-zinc-800 border border-white/10 flex items-center justify-center text-white font-bold text-xs shadow-lg">
-              RM
+              {localStorage.getItem('mecha_user').username?.charAt(2).toUpperCase() || 'U'}
             </div>
           </div>
         </header>

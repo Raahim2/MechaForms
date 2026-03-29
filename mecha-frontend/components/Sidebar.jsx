@@ -81,13 +81,7 @@ export default function Sidebar() {
           <div className="h-px bg-white/5 my-4 mx-2" />
         )}
 
-        <SidebarLink 
-          href="/dashboard/analytics" 
-          icon={<Activity size={18}/>} 
-          label="Analytics" 
-          active={isActive('/dashboard/analytics')} 
-          collapsed={isCollapsed} 
-        />
+      
         <SidebarLink 
           href="/dashboard/security" 
           icon={<Shield size={18}/>} 

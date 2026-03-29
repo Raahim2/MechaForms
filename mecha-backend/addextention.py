@@ -1,10 +1,11 @@
+
+    
 import asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 from dotenv import load_dotenv
 load_dotenv()   
 
-# Replace with your actual URI from MongoDB Atlas
 MONGODB_URL = os.getenv("MONGODB_URL")
 
 async def seed():
@@ -12,56 +13,75 @@ async def seed():
     db = client["mecha_platform"]
     col = db["extensions"]
 
-    # Clear existing to avoid duplicates during testing
-    await col.delete_many({})
-
-    java_pack = {
-        "slug": "java-pro",
-        "name": "Java Pro-Pack",
-        "version": "v2.4.1",
-        "author": "OracleDevs",
-        "installs": "24.8k",
-        "reliability": "99.9%",
-        "category": "Development",
-        "icon": "Code2", 
-        "color": "from-orange-500/20",
-        "tagline": "Advanced Java 21+ syntax protocols and enterprise boilerplate.",
-        "description": "The ultimate shortcut library for professional Java engineers. Includes high-velocity triggers for Spring Boot, Stream API, concurrency, and standard boilerplate reduction.",
+    ai_prompt_pack = {
+        "slug": "ai-prompts-pro",
+        "name": "AI Prompt Architect",
+        "version": "v1.0.0",
+        "author": "MechaLabs",
+        "installs": "45.2k",
+        "reliability": "100%",
+        "category": "Productivity",
+        "icon": "Sparkles", 
+        "color": "from-purple-500/20",
+        "tagline": "High-fidelity AI prompt templates.",
+        "description": "A collection of 15 engineered prompts for the @ai command. Optimized for Gemini and GPT models to ensure high-quality, concise, and professional outputs every time.",
         "manifest": [
-            # Boilerplate
-            {"trigger": "@psvm", "output": "public static void main(String[] args) {\n    \n}"},
-            {"trigger": "@sout", "output": "System.out.println(\"\");"},
-            {"trigger": "@class", "output": "public class Name {\n    \n    public Name() {\n        \n    }\n}"},
+            # 1. Summarization
+            {"trigger": "@sum", "output": "Summarize the following text into 3 concise bullet points: "},
             
-            # Control Flow
-            {"trigger": "@fori", "output": "for (int i = 0; i < count; i++) {\n    \n}"},
-            {"trigger": "@foreach", "output": "for (var item : items) {\n    \n}"},
-            {"trigger": "@if", "output": "if (condition) {\n    \n}"},
-            {"trigger": "@ifelse", "output": "if (condition) {\n    \n} else {\n    \n}"},
-            {"trigger": "@try", "output": "try {\n    \n} catch (Exception e) {\n    e.printStackTrace();\n}"},
-            {"trigger": "@switch", "output": "switch (value) {\n    case 1 -> { }\n    default -> { }\n}"},
-
-            # Modern Java / Collections
-            {"trigger": "@list", "output": "List<String> list = new ArrayList<>();"},
-            {"trigger": "@map", "output": "Map<String, Object> map = new HashMap<>();"},
-            {"trigger": "@stream", "output": "list.stream()\n    .filter(x -> x != null)\n    .map(x -> x)\n    .collect(Collectors.toList());"},
+            # 2. Professional Reply
+            {"trigger": "@reply", "output": "Draft a professional and polite reply to this message, accepting the proposal: "},
             
-            # Enterprise / Spring 
-            {"trigger": "@rest", "output": "@RestController\n@RequestMapping(\"/api/v1\")\npublic class Controller {\n    \n}"},
-            {"trigger": "@get", "output": "@GetMapping(\"/{id}\")\npublic ResponseEntity<?> get(@PathVariable String id) {\n    return ResponseEntity.ok().build();\n}"},
-            {"trigger": "@autowired", "output": "@Autowired\nprivate ServiceName service;"},
+            # 3. Polite Decline
+            {"trigger": "@no", "output": "Draft a polite decline for this request, mentioning I don't have capacity right now: "},
             
-            # Documentation
-            {"trigger": "@todo", "output": "// TODO: Implementation required by Engine context"},
-            {"trigger": "@fixme", "output": "// FIXME: Potential memory leak in technical protocol"}
+            # 4. TL;DR
+            {"trigger": "@tldr", "output": "Provide a one-sentence TL;DR of the following: "},
+            
+            # 5. Simplify (ELI5)
+            {"trigger": "@easy", "output": "Explain the following concept like I am 5 years old: "},
+            
+            # 6. Action Items
+            {"trigger": "@tasks", "output": "Extract all actionable tasks and deadlines from the following text: "},
+            
+            # 7. Tone Shifter (Professional)
+            {"trigger": "@pro", "output": "Rewrite the following text to sound more professional, corporate, and polished: "},
+            
+            # 8. Tone Shifter (Friendly)
+            {"trigger": "@chill", "output": "Rewrite the following text to sound casual, friendly, and approachable: "},
+            
+            # 9. Grammar Check (Deep)
+            {"trigger": "@fixit", "output": "Fix all grammar, spelling, and punctuation errors in this text while maintaining tone: "},
+            
+            # 10. Expansion
+            {"trigger": "@more", "output": "Expand on the following points to make them more descriptive and detailed: "},
+            
+            # 11. Shorten
+            {"trigger": "@less", "output": "Make the following text as concise as possible without losing the core meaning: "},
+            
+            # 12. Email Subject Line
+            {"trigger": "@subject", "output": "Generate 3 catchy and professional email subject lines for the following content: "},
+            
+            # 13. Translation (To English)
+            {"trigger": "@en", "output": "Translate the following text into clear, fluent English: "},
+            
+            # 14. Code Explainer
+            {"trigger": "@explain", "output": "Explain what this block of code does in simple terms: "},
+            
+            # 15. Key Takeaways
+            {"trigger": "@key", "output": "Identify the top 3 most important insights from the following information: "}
         ]
     }
 
-    await col.insert_one(java_pack)
+    await col.update_one(
+        {"slug": ai_prompt_pack["slug"]},
+        {"$set": ai_prompt_pack},
+        upsert=True
+    )
+    
     print("------------------------------------------")
-    print(" Java Pro-Pack Seeded Successfully!")
-    print(f" Total Shortcuts: {len(java_pack['manifest'])}")
-    print("------------------------------------------")
-
+    print(f"  AI Prompt Architect ({len(ai_prompt_pack['manifest'])} Nodes) Seeded!")
+    print("----------------------------------")
+    
 if __name__ == "__main__":
     asyncio.run(seed())
