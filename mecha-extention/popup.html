@@ -2,17 +2,29 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <!-- Stylesheets -->
   <link rel="stylesheet" href="styles/variables.css">
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/components.css">
   <link rel="stylesheet" href="styles/cards.css">
+  <style>
+    /* Quick additions for the new view */
+    .view-header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .back-btn { background: none; border: none; cursor: pointer; padding: 4px; display: flex; align-items: center; color: var(--text-muted); }
+    .back-btn:hover { color: var(--primary); }
+    .ext-meta-grid { padding: 16px; background: var(--bg-sub); display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11px; }
+    .meta-item { color: var(--text-muted); }
+    .meta-value { color: var(--text-main); font-weight: 600; }
+    .manifest-list { padding: 16px; }
+    .manifest-item { margin-bottom: 12px; border-bottom: 1px dashed var(--border); padding-bottom: 8px; }
+    .manifest-key { font-family: monospace; font-weight: 700; color: var(--primary); font-size: 12px; }
+    .manifest-val { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  </style>
 </head>
 <body>
   <div class="app-container">
-    <header>
+    <header id="main-header">
       <div class="logo-section">
-        <img src="assets/icon.png" alt="Mecha Vault"  class="logo-img">
+        <img src="assets/icon.png" alt="Mecha Vault" class="logo-img">
         <h1>Mecha Vault</h1>
       </div>
       <button id="logout-btn" class="logout-link">Sign Out</button>
@@ -45,16 +57,34 @@
 
       <div class="shortcut-grid" id="shortcut-list"></div>
 
-      <div class="action-footer">
+      <div class="action-footer" style="padding: 16px;">
         <button id="sync-btn" class="secondary-btn">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
           Sync Changes
         </button>
       </div>
     </div>
+
+    <!-- Extension Detail View -->
+    <div id="extension-view" class="view hidden">
+      <div class="view-header">
+        <button id="back-btn" class="back-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        </button>
+        <h2 id="ext-title" style="font-size: 14px; margin: 0;">Pack Details</h2>
+      </div>
+      
+      <div id="ext-meta" class="ext-meta-grid">
+        <!-- Meta info injected here -->
+      </div>
+
+      <div class="manifest-list" id="ext-manifest-list">
+        <!-- Shortcuts for this specific pack injected here -->
+      </div>
+    </div>
+
   </div>
 
-  <!-- Scripts -->
   <script src="scripts/api.js"></script>
   <script src="scripts/ui.js"></script>
   <script src="scripts/popup.js"></script>

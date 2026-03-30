@@ -10,18 +10,18 @@ const API = {
         return resp;
     },
     async getVault(email) {
-        const resp = await fetch(`${API_URL}/vault/list/${email}`);
+        const resp = await fetch(`${API_URL}/vault/list/${encodeURIComponent(email)}`);
+        if (!resp.ok) return [];
         return resp.json();
     },
     async getUserData(email) {
-        const resp = await fetch(`${API_URL}/users/${email}`);
+        const resp = await fetch(`${API_URL}/users/${encodeURIComponent(email)}`);
+        if (!resp.ok) throw new Error("User data fetch failed");
         return resp.json();
     },
     async getExtensionDetails(slug) {
-console.log(`Fetching details for extension slug: `);
         const resp = await fetch(`${API_URL}/extensions/details/${slug}`);
-
-        console.log(`Fetched details for ${slug}:`, resp);  
+        if (!resp.ok) throw new Error("Extension details not found");
         return resp.json();
     }
 };

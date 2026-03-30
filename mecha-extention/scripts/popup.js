@@ -8,6 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Back button logic
+    document.getElementById('back-btn').addEventListener('click', () => {
+        document.getElementById('extension-view').classList.add('hidden');
+        document.getElementById('dashboard-view').classList.remove('hidden');
+        document.getElementById('main-header').classList.remove('hidden');
+    });
+
     // Login Event
     document.getElementById('login-btn').addEventListener('click', async () => {
         const email = document.getElementById('email').value;
@@ -28,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sync Event
     document.getElementById('sync-btn').addEventListener('click', () => {
         chrome.storage.local.get(['email', 'username'], (res) => {
-            syncVault(res.email, res.username);
+            if (res.email) syncVault(res.email, res.username);
         });
     });
 
@@ -42,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const term = e.target.value.toLowerCase();
         chrome.storage.local.get(['shortcuts'], (res) => {
             const filtered = Object.fromEntries(
-                Object.entries(res.shortcuts).filter(([k, v]) => 
+                Object.entries(res.shortcuts || {}).filter(([k, v]) => 
                     k.toLowerCase().includes(term) || v.toLowerCase().includes(term)
                 )
             );
@@ -53,45 +60,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function syncVault(email, username) {
     const btn = document.getElementById('sync-btn');
-    btn.innerText = "Syncing...";
+    if (btn) btn.innerText = "Syncing...";
     try {
-        const [vaultData, userData] = await Promise.all([
-            API.getVault(email),
-            API.getUserData(email)
-        ]);
+        const userData = await API.getUserData(email);
+        const vaultData = await API.getVault(email);
 
         const shortcuts = Object.fromEntries(vaultData.map(i => [`@${i.key}`, i.val]));
         
-        // Fetch detailed info for each slug in active_extensions
         const slugs = userData.active_extensions || [];
         const detailedExtensions = await Promise.all(
             slugs.map(async (slug) => {
-                try {
-                    return await API.getExtensionDetails(slug);
-                } catch (err) {
-                    console.error(`Failed to fetch details for ${slug}`, err);
-                    return null;
-                }
+                try { return await API.getExtensionDetails(slug); } 
+                catch (err) { return null; }
             })
         );
 
-        // Filter out any nulls from failed fetches
         const validExtensions = detailedExtensions.filter(ext => ext !== null);
         
         chrome.storage.local.set({
-            isLoggedIn: true, 
-            username, 
-            email,
-            shortcuts, 
-            active_extensions: validExtensions
+            isLoggedIn: true, username, email,
+            shortcuts, active_extensions: validExtensions
         }, () => {
             UI.showView(true, username);
             UI.displayShortcuts(shortcuts);
             UI.updatePacks(validExtensions);
-            btn.innerText = "Sync Changes";
+            if (btn) btn.innerText = "Sync Changes";
         });
     } catch (e) { 
         console.error(e);
-        btn.innerText = "Error Syncing"; 
+        if (btn) btn.innerText = "Error Syncing"; 
     }
 }
