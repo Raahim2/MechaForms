@@ -48,3 +48,4 @@ async def login(user: UserLogin):
             "email": db_user["email"]
         }
     }
+

@@ -62,14 +62,36 @@ async function syncVault(email, username) {
 
         const shortcuts = Object.fromEntries(vaultData.map(i => [`@${i.key}`, i.val]));
         
+        // Fetch detailed info for each slug in active_extensions
+        const slugs = userData.active_extensions || [];
+        const detailedExtensions = await Promise.all(
+            slugs.map(async (slug) => {
+                try {
+                    return await API.getExtensionDetails(slug);
+                } catch (err) {
+                    console.error(`Failed to fetch details for ${slug}`, err);
+                    return null;
+                }
+            })
+        );
+
+        // Filter out any nulls from failed fetches
+        const validExtensions = detailedExtensions.filter(ext => ext !== null);
+        
         chrome.storage.local.set({
-            isLoggedIn: true, username, email,
-            shortcuts, active_extensions: userData.active_extensions
+            isLoggedIn: true, 
+            username, 
+            email,
+            shortcuts, 
+            active_extensions: validExtensions
         }, () => {
             UI.showView(true, username);
             UI.displayShortcuts(shortcuts);
-            UI.updatePacks(userData.active_extensions);
+            UI.updatePacks(validExtensions);
             btn.innerText = "Sync Changes";
         });
-    } catch (e) { btn.innerText = "Error Syncing"; }
+    } catch (e) { 
+        console.error(e);
+        btn.innerText = "Error Syncing"; 
+    }
 }

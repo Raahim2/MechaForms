@@ -26,13 +26,22 @@ const UI = {
 
     updatePacks(extensions) {
         const packsList = document.getElementById('active-packs-list');
-        packsList.innerHTML = extensions.length ? "" : "<span style='font-size:11px; color:#94a3b8'>No active packs</span>";
         
-        extensions.forEach(slug => {
-            const name = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        if (!extensions || extensions.length === 0) {
+            packsList.innerHTML = "<span style='font-size:11px; color:#94a3b8; padding: 4px 0;'>No active packs</span>";
+            return;
+        }
+
+        packsList.innerHTML = "";
+        
+        extensions.forEach(ext => {
             const chip = document.createElement('div');
             chip.className = 'pack-chip';
-            chip.innerHTML = `<div class="pack-dot"></div><span>${name}</span>`;
+            // We use ext.name directly from the backend object
+            chip.innerHTML = `
+                <div class="pack-dot"></div>
+                <span title="${ext.tagline || ''}">${ext.name}</span>
+            `;
             packsList.appendChild(chip);
         });
     },

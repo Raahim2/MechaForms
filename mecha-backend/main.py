@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.auth import router as auth_router
 from api.vault import router as vault_router 
 from api.extensions import router as extensions_router
+from api.users import router as users_router
 
 app = FastAPI(title="Mecha Engine")
 
@@ -18,6 +19,7 @@ app.add_middleware(
 app.include_router(auth_router)
 app.include_router(vault_router) 
 app.include_router(extensions_router)
+app.include_router(users_router)
 
 @app.get("/")
 async def root():
