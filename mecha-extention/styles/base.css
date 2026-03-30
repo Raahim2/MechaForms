@@ -1,0 +1,11 @@
+body { width: 350px; margin: 0; font-family: 'Inter', sans-serif; background: var(--bg-main); color: var(--text-main); }
+header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.logo-section { display: flex; align-items: center; gap: 8px; }
+.logo-img { width: 22px; height: 22px; }
+h1 { font-size: 14px; font-weight: 700; margin: 0; }
+.logout-link { background: none; border: none; color: var(--text-muted); font-size: 11px; cursor: pointer; text-decoration: underline; }
+.view { display: block; }
+.hidden { display: none; }
+.padding-16 { padding: 16px; }
+.footer-link { font-size: 11px; text-align: center; margin-top: 15px; color: var(--text-muted); }
+.footer-link a { color: var(--primary); text-decoration: none; }

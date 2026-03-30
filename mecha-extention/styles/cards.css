@@ -1,0 +1,11 @@
+.shortcut-grid { max-height: 280px; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.shortcut-card { border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; }
+.shortcut-card:hover { border-color: var(--primary); background: #f0f7ff; }
+.card-key { font-family: monospace; font-weight: 700; color: var(--primary); background: #dbeafe; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
+.card-body { font-size: 12px; color: var(--text-muted); margin-top: 6px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.5; }
+
+.packs-section { padding: 8px 16px; border-bottom: 1px solid var(--border); }
+.section-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
+.packs-row { display: flex; gap: 8px; overflow-x: auto; }
+.pack-chip { display: flex; align-items: center; gap: 6px; background: #f1f5f9; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; white-space: nowrap; border: 1px solid var(--border); }
+.pack-dot { width: 6px; height: 6px; background: var(--success); border-radius: 50%; }

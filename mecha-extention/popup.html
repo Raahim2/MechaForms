@@ -1,41 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style>
-    body { width: 300px; padding: 15px; font-family: sans-serif; background: #f9f9f9; }
-    .hidden { display: none; }
-    .card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    input { width: 100%; margin-bottom: 10px; padding: 10px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 5px; }
-    button { width: 100%; padding: 10px; cursor: pointer; background: #222; color: white; border: none; border-radius: 5px; font-weight: bold; }
-    .shortcut-item { font-size: 12px; border-bottom: 1px solid #eee; padding: 8px 0; color: #444; }
-    .shortcut-item b { color: #007bff; }
-    .error { color: #d9534f; font-size: 12px; margin-bottom: 10px; }
-    .footer { font-size: 11px; text-align: center; margin-top: 15px; color: #888; }
-    a { color: #007bff; text-decoration: none; }
-  </style>
+  <meta charset="UTF-8">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles/variables.css">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/cards.css">
 </head>
 <body>
-  <div class="card">
+  <div class="app-container">
+    <header>
+      <div class="logo-section">
+        <img src="assets/icon.png" alt="Mecha Vault"  class="logo-img">
+        <h1>Mecha Vault</h1>
+      </div>
+      <button id="logout-btn" class="logout-link">Sign Out</button>
+    </header>
+
     <!-- Login View -->
-    <div id="login-view">
-      <h3 style="margin-top:0">Mecha Vault</h3>
-      <div id="error-msg" class="error"></div>
-      <input type="text" id="email" placeholder="Email">
+    <div id="login-view" class="view padding-16">
+      <div id="error-msg" class="error-text"></div>
+      <input type="text" id="email" placeholder="Email address">
       <input type="password" id="password" placeholder="Password">
-      <button id="login-btn">Unlock Vault</button>
-      <div class="footer">
-        Manage vault at <br/> <a href="http://mecha-forms.vercel.app" target="_blank">mecha-forms.vercel.app</a>
+      <button id="login-btn" class="primary-btn">Unlock Vault</button>
+      <div class="footer-link">
+        Manage at <a href="http://mecha-forms.vercel.app" target="_blank">mecha-forms.vercel.app</a>
       </div>
     </div>
 
     <!-- Dashboard View -->
-    <div id="dashboard-view" class="hidden">
-      <h3 id="welcome-user" style="margin-top:0">Welcome</h3>
-      <div id="shortcut-list" style="max-height: 200px; overflow-y: auto; margin-bottom: 10px;"></div>
-      <button id="logout-btn" style="background:#888;">Logout / Lock</button>
-      <div class="footer">Close and reopen to sync latest changes.</div>
+    <div id="dashboard-view" class="view hidden">
+      <div class="search-section">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="search-input" placeholder="Search shortcuts...">
+        </div>
+      </div>
+
+      <div class="packs-section">
+        <div class="section-label">Active Extension Packs</div>
+        <div class="packs-row" id="active-packs-list"></div>
+      </div>
+
+      <div class="shortcut-grid" id="shortcut-list"></div>
+
+      <div class="action-footer">
+        <button id="sync-btn" class="secondary-btn">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          Sync Changes
+        </button>
+      </div>
     </div>
   </div>
-  <script src="popup.js"></script>
+
+  <!-- Scripts -->
+  <script src="scripts/api.js"></script>
+  <script src="scripts/ui.js"></script>
+  <script src="scripts/popup.js"></script>
 </body>
 </html>
